@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Application.Common\Application.Common.csproj" />
+		<ProjectReference Include="..\DataAccess\DataAccess.csproj" />
+		<ProjectReference Include="..\Hosted.Common\Hosted.Common.csproj" />
+		<ProjectReference Include="..\Infrastructure.Common\Infrastructure.Common.csproj" />
+		<ProjectReference Include="..\Parser.Application\Parser.Application.csproj" />
+		<ProjectReference Include="..\Parser.Infrastructure\Parser.Infrastructure.csproj" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<UserSecretsId>d3b8fa2b-f993-44f4-923f-925dff645bf1</UserSecretsId>
+	</PropertyGroup>
+</Project>
