@@ -1,6 +1,7 @@
 ﻿using Hosted.Common.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Sender.Presentation.Extensions;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureAppConfiguration(o =>
@@ -13,7 +14,10 @@ var host = Host.CreateDefaultBuilder(args)
 
         services
             .AddCustomOptions(configuration)
-            .AddMediaRepository();
+            .AddTelegramOptions(configuration)
+            .AddMediaRepository()
+            .AddCustomServices(configuration)
+            .AddQuartzConfiguration(configuration);
     })
     .Build();
 

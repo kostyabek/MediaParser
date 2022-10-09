@@ -1,18 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <UserSecretsId>6e8daf85-c94f-4bdc-a3ff-e9dc034a0a03</UserSecretsId>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<UserSecretsId>30fae3c0-2d78-4115-87f1-6a8f9fa9cb52</UserSecretsId>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Application.Common\Application.Common.csproj" />
-    <ProjectReference Include="..\Domain.Common\Domain.Common.csproj" />
-    <ProjectReference Include="..\Hosted.Common\Hosted.Common.csproj" />
-    <ProjectReference Include="..\Infrastructure.Common\Infrastructure.Common.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+		<PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.4.0" />
+		<PackageReference Include="Quartz.Extensions.Hosting" Version="3.4.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Hosted.Common\Hosted.Common.csproj" />
+		<ProjectReference Include="..\Sender.Application\Sender.Application.csproj" />
+		<ProjectReference Include="..\Sender.Domain\Sender.Domain.csproj" />
+		<ProjectReference Include="..\Sender.Infrastructure\Sender.Infrastructure.csproj" />
+	</ItemGroup>
 
 </Project>
