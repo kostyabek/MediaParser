@@ -6,6 +6,7 @@ using Sender.Presentation.Extensions;
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureAppConfiguration(o =>
     {
+        o.AddJsonFile("appsettings.json");
         o.AddUserSecrets(typeof(Program).Assembly);
     })
     .ConfigureServices((context, services) =>
