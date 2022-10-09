@@ -1,6 +1,7 @@
 ﻿using Application.Common.Repositories;
 using DataAccess.Entities;
 using Domain.Common.Filters;
+using Domain.Common.Models.Media;
 using Domain.Common.Options;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
@@ -20,16 +21,26 @@ public class MediaRepository : IMediaRepository
         _mediaCollection = database.GetCollection<Media>(optionsValue.MediaCollectionName);
     }
 
-    public Task<List<Media>> GetAllWithPaginationAsync(PaginationFilter paginationFilter)
+    public async Task<(List<MediaModel>, long)> GetAllWithPaginationAsync(PaginationFilter paginationFilter)
     {
         var skip = paginationFilter.PageSize * (paginationFilter.PageNumber - 1);
         var limit = paginationFilter.PageSize;
 
-        return _mediaCollection
-            .Find(_ => true)
+        IFindFluent<Media, Media> query = _mediaCollection.Find(_ => true);
+        long totalCount = await query.CountDocumentsAsync();
+        List<MediaModel> models = await query
             .Skip(skip)
             .Limit(limit)
+            .Project(e => new MediaModel
+            {
+                Id = e.Id,
+                Url = e.Url,
+                GroupKey = e.GroupKey,
+                CreatedDate = e.CreatedDate
+            })
             .ToListAsync();
+
+        return (models, totalCount);
     }
 
     public Task<Media> GetByIdAsync(string id)
