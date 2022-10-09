@@ -1,4 +1,5 @@
-﻿using Application.Common.Repositories;
+﻿using System.Linq.Expressions;
+using Application.Common.Repositories;
 using DataAccess.Entities;
 using Domain.Common.Filters;
 using Domain.Common.Models.Media;
@@ -21,7 +22,24 @@ public class MediaRepository : IMediaRepository
         _mediaCollection = database.GetCollection<Media>(optionsValue.MediaCollectionName);
     }
 
-    public async Task<(List<MediaModel>, long)> GetAllWithPaginationAsync(PaginationFilter paginationFilter)
+    public async Task<(List<MediaModel>, long)> GetAllAsync()
+    {
+        IFindFluent<Media, Media> query = _mediaCollection.Find(_ => true);
+        long totalCount = await query.CountDocumentsAsync();
+        List<MediaModel> models = await query
+            .Project(e => new MediaModel
+            {
+                Id = e.Id,
+                Url = e.Url,
+                GroupKey = e.GroupKey,
+                CreatedDate = e.CreatedDate
+            })
+            .ToListAsync();
+
+        return (models, totalCount);
+    }
+
+    public async Task<(List<MediaModel>, long)> GetAllAsync(PaginationFilter paginationFilter)
     {
         var skip = paginationFilter.PageSize * (paginationFilter.PageNumber - 1);
         var limit = paginationFilter.PageSize;
@@ -43,6 +61,23 @@ public class MediaRepository : IMediaRepository
         return (models, totalCount);
     }
 
+    public Task<List<Media>> FindAsync(Expression<Func<Media, bool>> filter)
+        => _mediaCollection
+            .Find(filter)
+            .ToListAsync();
+
+    public Task<List<Media>> FindAsync(Expression<Func<Media, bool>> filter, PaginationFilter paginationFilter)
+    {
+        var skip = paginationFilter.PageSize * (paginationFilter.PageNumber - 1);
+        var limit = paginationFilter.PageSize;
+
+        return _mediaCollection
+            .Find(filter)
+            .Skip(skip)
+            .Limit(limit)
+            .ToListAsync();
+    }
+
     public Task<Media> GetByIdAsync(string id)
         => _mediaCollection
             .Find(m => m.Id == id)
@@ -51,9 +86,15 @@ public class MediaRepository : IMediaRepository
     public Task CreateAsync(Media entity)
         => _mediaCollection.InsertOneAsync(entity);
 
-    public async Task<long> DeleteAsync(string id)
+    public async Task<long> DeleteByIdAsync(string id)
     {
         var deletionResult = await _mediaCollection.DeleteOneAsync(m => m.Id == id);
+        return deletionResult.DeletedCount;
+    }
+
+    public async Task<long> DeleteManyAsync(IEnumerable<string> ids)
+    {
+        var deletionResult = await _mediaCollection.DeleteManyAsync(m => ids.Contains(m.Id));
         return deletionResult.DeletedCount;
     }
 }
