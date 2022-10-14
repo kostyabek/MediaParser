@@ -13,12 +13,13 @@ var host = Host.CreateDefaultBuilder(args)
     {
         var configuration = context.Configuration;
 
-        services
+        services 
             .AddCustomOptions(configuration)
             .AddTelegramOptions(configuration)
             .AddMediaRepository()
             .AddCustomServices(configuration)
-            .AddQuartzConfiguration(configuration);
+            .AddQuartzConfiguration(configuration)
+            .AddNLogConfiguration(configuration);
     })
     .Build();
 
