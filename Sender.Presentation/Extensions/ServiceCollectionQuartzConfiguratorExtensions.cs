@@ -34,9 +34,6 @@ public static class ServiceCollectionQuartzConfiguratorExtensions
         quartz.AddTrigger(opts => opts
             .ForJob(jobKey)
             .WithIdentity($"{jobName}-trigger")
-            .StartNow()
-            // TODO: changed cron schedule to simple for testing
-            //.WithCronSchedule(cronSchedule));
-            .WithSimpleSchedule(e => e.WithIntervalInHours(1)));
+            .WithCronSchedule(cronSchedule));
     }
 }
