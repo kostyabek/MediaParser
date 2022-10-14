@@ -9,6 +9,9 @@ using Parser.Domain;
 
 namespace Parser.Application.CQRS.Commands.ParseJoyReactorCategory;
 
+/// <summary>
+/// Handles <see cref="ParseJoyReactorCategoryCommand"/>.
+/// </summary>
 public class ParseJoyReactorCategoryCommandHandler : IRequestHandler<ParseJoyReactorCategoryCommand, Result>
 {
     private readonly IJoyReactorParsingService _parsingService;
@@ -16,6 +19,12 @@ public class ParseJoyReactorCategoryCommandHandler : IRequestHandler<ParseJoyRea
     private readonly IMediaRepository _mediaRepository;
     private readonly IHtmlHttpClient _httpClient;
 
+    /// <summary>
+    /// Instantiates <see cref="ParseJoyReactorCategoryCommand"/>
+    /// </summary>
+    /// <param name="parsingService">Parsing service.</param>
+    /// <param name="mediaRepository">Media repository.</param>
+    /// <param name="httpClient">HTTP-client.</param>
     public ParseJoyReactorCategoryCommandHandler(
         IJoyReactorParsingService parsingService,
         IMediaRepository mediaRepository,
@@ -26,6 +35,7 @@ public class ParseJoyReactorCategoryCommandHandler : IRequestHandler<ParseJoyRea
         _httpClient = httpClient;
     }
 
+    /// <inheritdoc />
     public async Task<Result> Handle(ParseJoyReactorCategoryCommand request, CancellationToken cancellationToken)
     {
         try

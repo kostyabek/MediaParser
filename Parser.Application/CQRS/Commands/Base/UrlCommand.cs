@@ -1,5 +1,8 @@
 ﻿namespace Parser.Application.CQRS.Commands.Base;
 
+/// <summary>
+/// Base class for all commands containing URL data.
+/// </summary>
 public abstract class UrlCommand
 {
     private readonly string _url = string.Empty;

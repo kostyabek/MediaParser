@@ -26,7 +26,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Hosted.Common\Hosted.Common.csproj" />
-		<ProjectReference Include="..\Sender.Application\Sender.Application.csproj" />
 		<ProjectReference Include="..\Sender.Domain\Sender.Domain.csproj" />
 		<ProjectReference Include="..\Sender.Infrastructure\Sender.Infrastructure.csproj" />
 	</ItemGroup>

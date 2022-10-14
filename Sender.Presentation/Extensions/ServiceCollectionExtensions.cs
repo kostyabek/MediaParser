@@ -9,6 +9,9 @@ using Telegram.Bot;
 
 namespace Sender.Presentation.Extensions;
 
+/// <summary>
+/// Contains extension methods for <see cref="IServiceCollection"/>.
+/// </summary>
 public static class ServiceCollectionExtensions
 {
     /// <summary>

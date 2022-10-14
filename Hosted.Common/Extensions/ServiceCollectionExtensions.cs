@@ -16,6 +16,9 @@ using NLog.Targets;
 
 namespace Hosted.Common.Extensions;
 
+/// <summary>
+/// Contains extension methods for <see cref="IServiceCollection"/>.
+/// </summary>
 public static class ServiceCollectionExtensions
 {
     /// <summary>

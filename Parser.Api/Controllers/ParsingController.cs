@@ -1,4 +1,4 @@
-﻿using DataAccess.Entities;
+﻿using FluentResults;
 using Hosted.Common.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +7,7 @@ using Parser.Application.CQRS.Commands.ParseJoyReactorCategory;
 namespace Parser.Api.Controllers;
 
 /// <summary>
-/// Controller for <see cref="Media"/>-related operations.
+/// Controller for parsing operations.
 /// </summary>
 [ApiController]
 [Route("api/v1.0/parsing")]
@@ -29,6 +29,8 @@ public class ParsingController : ControllerBase
     /// Scraps and saves CDN images' links to database from given URL to joyreactor.cc category.
     /// </summary>
     /// <param name="url">URL to start scrapping images from.</param>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(List<IReason>), StatusCodes.Status500InternalServerError)]
     [HttpPost("joyreactor")]
     public async Task<IActionResult> ScrapFromJoyReactorAsync([FromBody] string url)
     {
